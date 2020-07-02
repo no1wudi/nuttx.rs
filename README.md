@@ -14,7 +14,8 @@ We can use it just like Rust std library:
 #[macro_use]
 extern crate nuttx_rs;
 
-fn main() {
+#[no_mangle]
+pub fn main() {
     println!("Hello from Rust");
 }
 
