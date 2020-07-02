@@ -1,0 +1,29 @@
+name: Rust
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Rust Toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+          toolchain: stable
+          override: true
+          components: rustfmt, rls
+    - run: rustup target add thumbv7m-none-eabi
+    - run: rustup target add thumbv7em-none-eabi
+    - run: rustup target add thumbv7em-none-eabihf
+    - run: cargo build --target=thumbv7m-none-eabi
+    - run: cargo build --target=thumbv7em-none-eabi
+    - run: cargo build --target=thumbv7em-none-eabihf
