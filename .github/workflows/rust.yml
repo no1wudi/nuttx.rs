@@ -20,7 +20,6 @@ jobs:
       with:
           toolchain: stable
           override: true
-          components: rustfmt, rls
     - run: rustup target add thumbv7m-none-eabi
     - run: rustup target add thumbv7em-none-eabi
     - run: rustup target add thumbv7em-none-eabihf

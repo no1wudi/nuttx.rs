@@ -10,6 +10,8 @@ It's built on NuttX, with mature hardware support and POSIX compatible API.
 
 We can use it just like Rust std library:
 ```rust
+#![no_std]
+#![no_main]
 
 #[macro_use]
 extern crate nuttx_rs;
