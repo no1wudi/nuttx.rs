@@ -23,6 +23,12 @@ jobs:
     - run: rustup target add thumbv7m-none-eabi
     - run: rustup target add thumbv7em-none-eabi
     - run: rustup target add thumbv7em-none-eabihf
+    - run: rustup target add thumbv8m.base-none-eabi
+    - run: rustup target add thumbv8m.main-none-eabi
+    - run: rustup target add thumbv8m.main-none-eabihf
     - run: cargo build --target=thumbv7m-none-eabi
     - run: cargo build --target=thumbv7em-none-eabi
     - run: cargo build --target=thumbv7em-none-eabihf
+    - run: cargo build --target=thumbv8m.base-none-eabi
+    - run: cargo build --target=thumbv8m.main-none-eabi
+    - run: cargo build --target=thumbv8m.main-none-eabihf
