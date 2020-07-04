@@ -22,3 +22,22 @@ pub fn main() {
 }
 
 ```
+
+## Build
+
+First, you should setup NuttX's develop enviroment, and set the task entry to
+main (or other you preferred), and then set the enviroment vairable `NUTTX_DIR`:
+```bash
+export NUTTX_DIR=/path/to/nuttx
+```
+
+And in your application project, add build target in `.cargo/config`:
+```toml
+[build]
+target = "thumbv7em-none-eabi"
+
+[target.thumbv7em-none-eabi]
+rustflags = ["-C", "link-arg=-Tlink.x"]
+```
+
+The link script `link.x` you can get in NuttX's board config dir.
