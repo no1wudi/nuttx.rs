@@ -11,6 +11,8 @@ mod macros;
 mod libc;
 
 pub mod io;
+pub mod thread;
+pub mod time;
 
 use core::panic::PanicInfo;
 

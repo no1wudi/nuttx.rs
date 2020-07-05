@@ -24,4 +24,6 @@ pub const STDERR_FILENO: c_int = 2;
 extern "C" {
     pub fn write(fd: c_int, buf: *const u8, nbytes: c_int) -> c_int;
     pub fn read(fd: c_int, buf: *mut u8, nbytes: c_int) -> c_int;
+    pub fn usleep(micro_seconds: c_int);
+    pub fn pthread_yield();
 }
