@@ -31,6 +31,12 @@ main (or other you preferred), and then set the enviroment vairable `NUTTX_DIR`:
 export NUTTX_DIR=/path/to/nuttx
 ```
 
+Add dependencies to your `Cargo.toml`:
+```toml
+[dependencies]
+nuttx_rs = { git = "https://github.com/no1wudi/nuttx.rs.git" }
+```
+
 And in your application project, add build target in `.cargo/config`:
 ```toml
 [build]
