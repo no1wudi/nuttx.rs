@@ -2,18 +2,17 @@ name: Rust
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  Build_for_ARM:
     runs-on: ubuntu-latest
-
-    steps:
+    steps:    
     - uses: actions/checkout@v2
     - name: Install Rust Toolchain
       uses: actions-rs/toolchain@v1
@@ -32,3 +31,17 @@ jobs:
     - run: cargo build --target=thumbv8m.base-none-eabi
     - run: cargo build --target=thumbv8m.main-none-eabi
     - run: cargo build --target=thumbv8m.main-none-eabihf
+
+  Build_for_RISCV:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Rust Toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+          toolchain: stable
+          override: true
+    - run: rustup target add riscv32imc-unknown-none-elf
+    - run: rustup target add riscv64imac-unknown-none-elf
+    - run: cargo build --target=riscv32imc-unknown-none-elf
+    - run: cargo build --target=riscv64imac-unknown-none-elf

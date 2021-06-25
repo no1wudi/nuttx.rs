@@ -3,9 +3,9 @@ mod stdio;
 
 use core::fmt;
 
-pub use stdio::print_to_stdout;
+pub use self::stdio::print_to_stdout;
 
-pub use error::{Error, ErrorKind, Result};
+pub use self::error::{Error, ErrorKind, Result};
 
 pub trait Read {
     fn read(&mut self, buf: &mut [u8]) -> Result<usize>;
