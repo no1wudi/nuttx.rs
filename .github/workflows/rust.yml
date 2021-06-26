@@ -41,7 +41,13 @@ jobs:
       with:
           toolchain: stable
           override: true
+    - run: rustup target add riscv32i-unknown-none-elf
     - run: rustup target add riscv32imc-unknown-none-elf
+    - run: rustup target add riscv32imac-unknown-none-elf
     - run: rustup target add riscv64imac-unknown-none-elf
+    - run: rustup target add riscv64gc-unknown-none-elf
+    - run: cargo build --target=riscv32i-unknown-none-elf
     - run: cargo build --target=riscv32imc-unknown-none-elf
+    - run: cargo build --target=riscv32imac-unknown-none-elf
     - run: cargo build --target=riscv64imac-unknown-none-elf
+    - run: cargo build --target=riscv64gc-unknown-none-elf
