@@ -10,6 +10,25 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
+  Fetch:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        repository: apache/incubator-nuttx
+        path: nx/nuttx
+    - uses: actions/checkout@v2
+      with:
+        repository: apache/incubator-nuttx-apps
+        path: nx/apps
+    - run: find nx -name defconfig | xargs sed -i 's/nsh_main/main/g'
+    - run: tar -czf nx.tar.gz nx
+    - uses: actions/upload-artifact@v2
+      with:
+        name: nx
+        path: nx.tar.gz
+    
+
   Build_for_ARM:
     runs-on: ubuntu-latest
     steps:    
@@ -51,3 +70,23 @@ jobs:
     - run: cargo build --target=riscv32imac-unknown-none-elf
     - run: cargo build --target=riscv64imac-unknown-none-elf
     - run: cargo build --target=riscv64gc-unknown-none-elf
+
+  Build_for_Examples:
+    runs-on: ubuntu-latest
+    needs: Fetch
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Rust Toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+          toolchain: stable
+          override: true
+    - run: rustup target add thumbv7em-none-eabihf
+    - uses: actions/download-artifact@v2
+      with:
+        name: nx
+    - run: tar -xzvf nx.tar.gz
+    - name: Install build toolkit
+      run: sudo apt install -y gcc-arm-none-eabi kconfig-frontends
+    - name: Build
+      run: NUTTX_SRC_DIR=$PWD/nx/nuttx cargo build --example helloworld --target=thumbv7em-none-eabihf

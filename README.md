@@ -26,9 +26,16 @@ pub fn main() {
 ## Build
 
 First, you should setup NuttX's develop enviroment, and set the task entry to
-main (or other you preferred), and then set the enviroment vairable `NUTTX_DIR`:
+main (or other you preferred), and then set the enviroment vairable:
+
+* `NUTTX_SRC_DIR`
+* `NUTTX_BOARD_DIR`
+* `NUTTX_BOARD_LD`
+
 ```bash
-export NUTTX_DIR=/path/to/nuttx
+export NUTTX_SRC_DIR=/path/to/nuttx
+export NUTTX_BOARD_DIR=/path/to/nuttx/boards/xxx (stm32f4discovery by default)
+export NUTTX_BOARD_LD=ld.script (by default)
 ```
 
 Add dependencies to your `Cargo.toml`:
@@ -37,12 +44,9 @@ Add dependencies to your `Cargo.toml`:
 nuttx_rs = { git = "https://github.com/no1wudi/nuttx.rs.git" }
 ```
 
-And in your application project, add build target in `.cargo/config`:
+And in your application project, add build target in `.cargo/config.toml`:
 ```toml
 [build]
-target = "thumbv7em-none-eabi"
-
-[target.thumbv7em-none-eabi]
 rustflags = ["-C", "link-arg=-Tlink.x"]
 ```
 

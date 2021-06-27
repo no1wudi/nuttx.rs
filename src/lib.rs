@@ -14,10 +14,12 @@ pub mod io;
 pub mod thread;
 pub mod time;
 
+#[cfg(not(target_arch="x86_64"))]
 use core::panic::PanicInfo;
 
 pub use core::format_args;
 
+#[cfg(not(target_arch="x86_64"))]
 #[panic_handler]
 fn panic(_panic: &PanicInfo<'_>) -> ! {
     println!("{}", _panic);

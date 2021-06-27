@@ -1,3 +1,4 @@
 .vscode
+link.ld
 target
 Cargo.lock
