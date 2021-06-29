@@ -23,6 +23,20 @@ pub fn main() {
 
 ```
 
+## Requirement
+
+On ubuntu, install NuttX build dependencies by this command:
+```bash
+sudo apt install gcc-arm-none-eabi kconfig-frontends
+```
+
+And the glone nuttx and apps into your work space, like:
+
+* ~/work
+    * nx
+        * apps
+        * nuttx
+
 ## Build
 
 First, you should setup NuttX's develop enviroment, and set the task entry to
@@ -33,9 +47,9 @@ main (or other you preferred), and then set the enviroment vairable:
 * `NUTTX_BOARD_LD`
 
 ```bash
-export NUTTX_SRC_DIR=/path/to/nuttx
-export NUTTX_BOARD_DIR=/path/to/nuttx/boards/xxx (stm32f4discovery by default)
-export NUTTX_BOARD_LD=ld.script (by default)
+export NUTTX_SRC_DIR=/path/to/nuttx (e.g. ~/work/nx/nuttx)
+export NUTTX_BOARD_DIR=nuttx/boards/xxx (stm32f4discovery by default)
+export NUTTX_BOARD_LD=ld.script (by default, in boards/scripts)
 ```
 
 Add dependencies to your `Cargo.toml`:
@@ -47,7 +61,7 @@ nuttx_rs = { git = "https://github.com/no1wudi/nuttx.rs.git" }
 And in your application project, add build target in `.cargo/config.toml`:
 ```toml
 [build]
-rustflags = ["-C", "link-arg=-Tlink.x"]
+rustflags = ["-C", "link-arg=-Tlink.ld"]
 ```
 
-The link script `link.x` you can get in NuttX's board config dir.
+The link script `link.ld` you can get in NuttX's board config dir.
