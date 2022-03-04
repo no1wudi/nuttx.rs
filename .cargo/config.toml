@@ -1,0 +1,5 @@
+[target.thumbv7m-none-eabi]
+rustflags = ["-C", "link-arg=-Tlink.ld"]
+
+[target.riscv32imac-unknown-none-elf]
+rustflags = ["-C", "link-arg=-Tlink.ld"]
