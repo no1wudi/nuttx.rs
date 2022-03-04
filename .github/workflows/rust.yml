@@ -14,20 +14,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      if: steps.cache.outputs.cache-hit != 'true'
       with:
         repository: apache/incubator-nuttx
         path: nx/nuttx
     - uses: actions/checkout@v2
+      if: steps.cache.outputs.cache-hit != 'true'
       with:
         repository: apache/incubator-nuttx-apps
         path: nx/apps
     - run: find nx -name defconfig | xargs sed -i 's/nsh_main/main/g'
-    - run: tar -czf nx.tar.gz nx
-    - uses: actions/upload-artifact@v2
+    - name: Cache NuttX
+      uses: actions/cache@v2
+      id: cache
       with:
-        name: nx
-        path: nx.tar.gz
-    
+        key: apache-nuttx-source
+        path: |
+          nx/apps
+          nx/nuttx
 
   Build_for_ARM:
     runs-on: ubuntu-latest
@@ -82,10 +86,6 @@ jobs:
           toolchain: stable
           override: true
     - run: rustup target add thumbv7em-none-eabihf
-    - uses: actions/download-artifact@v2
-      with:
-        name: nx
-    - run: tar -xzvf nx.tar.gz
     - name: Install build toolkit
       run: sudo apt install -y gcc-arm-none-eabi kconfig-frontends
     - name: Build
